@@ -1,12 +1,14 @@
-import {FlatList, View, Image, Text, Pressable} from "react-native";
+import {FlatList, View, Image, Text, Pressable, TouchableOpacity} from "react-native";
 import {images, offers} from "@/constants"
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Fragment} from "react"
 import cn from "clsx"
+import CartButton from "@/components/CartButton";
 
 const Index = () => {
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-cyan-100">
+
       <FlatList
         data = {offers}
 
@@ -48,6 +50,24 @@ const Index = () => {
         }}
         keyExtractor = {(item) => item.id.toString()}
         contentContainerClassName={"pb-28 px-5"}
+
+        ListHeaderComponent={() => {
+          return (
+            <View className={"flex-between flex-row my-5 px-5"}>
+              <View className={"flex-start"}>
+                <Text className={"small-bold text-primary"}>DELEVER TO</Text>
+                <TouchableOpacity className={"flex-center flex-row gap-x-1"}>
+                  <Text className={"paragraph-bold text-dark-100"}>Germany</Text>
+                  <Image source={images.arrowDown}
+                         className={"size-3"}
+                         resizeMode={"contain"}
+                  />
+                </TouchableOpacity>
+              </View>
+              <CartButton />
+            </View>
+          )
+        }}
       />
     </SafeAreaView>
   );

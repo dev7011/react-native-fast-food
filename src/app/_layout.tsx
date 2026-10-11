@@ -19,8 +19,6 @@ export default function TabLayout() {
      console.log("Layout layout loaded", fontsLoaded);
   }, [fontsLoaded, error])
 
-  return (
-    <Stack
-    />
-  );
+  return <Stack screenOptions={{ headerShown: false }} />;
+
 }

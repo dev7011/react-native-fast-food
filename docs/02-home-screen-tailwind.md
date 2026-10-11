@@ -3,32 +3,18 @@
     import { offers } from "@/constants/index";
 
 ♦️ definieren import-type
-    👉 touch types.d.ts
-         
+    👉 touch types.d.ts 
+
         declare module { *.png
           const value: number
           export default value    
         }
-      
-♦️ tailwind-css definieren   
 
-    @import "@/styles/components.css";
-    @import "@/styles/cart.css";
-    
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-    
-    @layer utilities {
-        .flex-center {
-        @apply flex items-center justify-center;
-        }
-        
-        .flex-between {
-        @apply flex items-center justify-between;
-        }
-        
-        .flex-start {
-        @apply flex items-start justify-center;
-        }
-    }
+♦️ use cn-function von clsx
+    npm i clsx
+
+     <View className={cn("flex-1 p-4", isEvent ? "bg-white" : bg-red-400)} />
+     👉 Das entspricht:
+    <View className="flex-1 p-4 bg-white" /> OR
+    <View className="flex-1 p-4 bg-red" />
+     

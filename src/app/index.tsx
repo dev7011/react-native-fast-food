@@ -2,6 +2,7 @@ import {FlatList, View, Image, Text, Pressable} from "react-native";
 import { offers } from "@/constants"
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Fragment} from "react"
+import cn from "clsx"
 
 const Index = () => {
   return (
@@ -14,7 +15,7 @@ const Index = () => {
 
           return (
             <View >
-              <Pressable className="offer-card flex-row" style = {{backgroundColor: item.color}}>
+              <Pressable className= {cn("offer-card", isEven ? "flex-row-reverse" : "flex-row")} style = {{backgroundColor: item.color}}>
                   {({pressed}) => {
                     return (
                       <Fragment>

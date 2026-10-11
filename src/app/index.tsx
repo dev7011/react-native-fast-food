@@ -1,12 +1,44 @@
-import { Text, View } from "react-native";
+import {FlatList, View, Image, Text, Pressable} from "react-native";
+import { offers } from "@/constants"
+import {SafeAreaView} from "react-native-safe-area-context";
+import {Fragment} from "react"
 
 const Index = () => {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text className="text-xl text-primary font-quicksand-bold">
-        Welcome to Nativewind!
-      </Text>
-    </View>
+    <SafeAreaView>
+      <FlatList
+        data = {offers}
+
+        renderItem= { ({item, index}) => {
+          const isEven: boolean = index % 2 === 0
+
+          return (
+            <View >
+              <Pressable className="offer-card flex-row" style = {{backgroundColor: item.color}}>
+                  {({pressed}) => {
+                    return (
+                      <Fragment>
+                        <View className="h-48 w-1/2">
+                          <Image
+                            source={item.image}
+                            className="size-full"
+                            resizeMode="center"
+                          />
+                        </View>
+                        <View>
+                          <Text> { item.title } </Text>
+                        </View>
+                      </Fragment>
+                    )
+                  }}
+              </Pressable>
+            </View>
+          )
+        }}
+        keyExtractor = {(item) => item.id.toString()}
+      >
+      </FlatList>
+    </SafeAreaView>
   );
 }
 

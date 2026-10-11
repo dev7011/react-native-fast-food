@@ -1,12 +1,12 @@
 import {FlatList, View, Image, Text, Pressable} from "react-native";
-import { offers } from "@/constants"
+import {images, offers} from "@/constants"
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Fragment} from "react"
 import cn from "clsx"
 
 const Index = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1 bg-white">
       <FlatList
         data = {offers}
 
@@ -15,7 +15,11 @@ const Index = () => {
 
           return (
             <View >
-              <Pressable className= {cn("offer-card", isEven ? "flex-row-reverse" : "flex-row")} style = {{backgroundColor: item.color}}>
+              <Pressable
+                  className= {cn("offer-card", isEven ? "flex-row-reverse" : "flex-row")}
+                  style = {{backgroundColor: item.color}}
+                  android_ripple={{color: "#FFFF22"}}
+              >
                   {({pressed}) => {
                     return (
                       <Fragment>
@@ -26,8 +30,14 @@ const Index = () => {
                             resizeMode="center"
                           />
                         </View>
-                        <View>
-                          <Text> { item.title } </Text>
+                        <View className= {cn("offer-card__info", isEven ? "pl-10" : "pr-10")}>
+                          <Text className= "h1-bold text-white leading-tight">{ item.title }</Text>
+                          <Image
+                            source={images.arrowRight}
+                            className= {"size-10"}
+                            resizeMode= "contain"
+                            tintColor= "#FFFFFF"
+                          />
                         </View>
                       </Fragment>
                     )
@@ -37,8 +47,8 @@ const Index = () => {
           )
         }}
         keyExtractor = {(item) => item.id.toString()}
-      >
-      </FlatList>
+        contentContainerClassName={"pb-28 px-5"}
+      />
     </SafeAreaView>
   );
 }

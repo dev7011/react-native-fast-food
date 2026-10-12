@@ -1,28 +1,36 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native';
-import { Link, router } from 'expo-router';
+import React, { useState } from 'react'
+import { View, Text } from 'react-native'
+import { Link, router } from 'expo-router'
 
-import CustomInput from '@/components/CustomInput';
-import CustomButton from '@/components/CustomButton';
-import ModalForm from '@/components/ModalForm';
+import CustomInput from '@/components/CustomInput'
+import CustomButton from '@/components/CustomButton'
+import ModalForm from '@/components/ModalForm'
 
 const SignIn = () => {
   const [form, setForm] = useState({
     email: '',
     password: '',
-  });
+  })
 
-  const [invalidAuth, setInvalidAuth] = useState(false);
+  const [invalidAuth, setInvalidAuth] = useState(false)
 
   const handleSubmit = () => {
-    if (!form.email.trim() || !form.password) {
-      setInvalidAuth(true);
-      return;
+    try {
+      if (!form.email.trim() || !form.password) {
+        setInvalidAuth(true)
+        return
+      }
+
+      setInvalidAuth(false)
+
+      router.replace('/')
+
+    } catch (error) {
+      console.log(error)
+      throw error
     }
 
-    setInvalidAuth(false);
-    router.replace('/');
-  };
+  }
 
   return (
     <View className="gap-16 bg-white p-5 mt-5">
@@ -35,9 +43,8 @@ const SignIn = () => {
 
       <CustomInput
         label="Email"
-        secureTextEntry={false}
         value={form.email}
-        onChangeText={(text) =>
+        onChangeText={(text: string) =>
           setForm((prev) => ({ ...prev, email: text }))
         }
         keyboardType="email-address"
@@ -46,9 +53,9 @@ const SignIn = () => {
 
       <CustomInput
         label="Password"
-        secureTextEntry
-        value={form.password}
-        onChangeText={(text) =>
+        secureTextEntry= {true}
+        value= {form.password}
+        onChangeText={(text: string) =>
           setForm((prev) => ({ ...prev, password: text }))
         }
         placeholder="Enter your password"
@@ -72,7 +79,7 @@ const SignIn = () => {
         </Link>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SignIn

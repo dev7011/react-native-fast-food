@@ -1,4 +1,4 @@
-import {SplashScreen, Stack} from "expo-router";
+import {SplashScreen, Stack, useRouter} from "expo-router";
 import {useFonts} from "expo-font";
 import "@/global.css"
 import {useEffect} from "react";
@@ -12,13 +12,35 @@ export default function TabLayout() {
     "QuickSand-Light": require('@/assets/fonts/Quicksand-Light.ttf'),
   });
 
+  const router = useRouter();
+  const isAuthenticated = true
+
+  useEffect(() => {
+    if (!isAuthenticated)
+      router.replace("/sign_in")
+  }, []);
+
   useEffect(() => {
     if (error) throw error;
-
     if (fontsLoaded) SplashScreen.hideAsync()
-     console.log("Layout layout loaded", fontsLoaded);
+
   }, [fontsLoaded, error])
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <Stack>
+      <Stack.Screen
+        name="(tabs)"
+        options={{
+          headerShown: false,
+        }}
+      />
 
+      <Stack.Screen
+        name="(auth)"
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack>
+  )
 }

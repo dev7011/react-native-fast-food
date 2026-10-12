@@ -13,7 +13,7 @@ export default function TabLayout() {
   });
 
   const router = useRouter();
-  const isAuthenticated = true
+  const isAuthenticated = false
 
   useEffect(() => {
     if (!isAuthenticated)

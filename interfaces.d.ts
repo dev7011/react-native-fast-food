@@ -18,3 +18,10 @@ interface CustomButtonProps {
   style?: StyleSheet
   leftIcon?: boolen
 }
+
+
+export interface User {
+  name: string;
+  email: string;
+  avatar: string;
+}

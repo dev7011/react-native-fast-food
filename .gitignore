@@ -47,3 +47,7 @@ example
 /.idea/modules.xml
 /.idea/vcs.xml
 /my-expo-app/
+
+.env.local
+
+.env.local

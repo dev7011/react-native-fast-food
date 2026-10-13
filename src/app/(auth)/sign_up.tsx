@@ -54,7 +54,7 @@ const SignUp = () => {
       <CustomInput
         label="Full-name"
         value={form.name}
-        onChangeText={(email) =>
+        onChangeText={(email: string) =>
           setForm((prev) => ({ ...prev, name: email }))
         }
         keyboardType="email-address"
@@ -64,7 +64,7 @@ const SignUp = () => {
       <CustomInput
         label="Email"
         value={form.email}
-        onChangeText={(text) =>
+        onChangeText={(text: string) =>
           setForm((prev) => ({ ...prev, email: text }))
         }
         keyboardType="email-address"
@@ -75,7 +75,7 @@ const SignUp = () => {
         label="Password"
         secureTextEntry={true}
         value={form.password}
-        onChangeText={(text) =>
+        onChangeText={(text: string) =>
           setForm((prev) => ({ ...prev, password: text }))
         }
         placeholder="Enter your password"
@@ -85,7 +85,7 @@ const SignUp = () => {
         label="Confirm password"
         secureTextEntry={true}
         value={form.confirmPassword}
-        onChangeText={(text) =>
+        onChangeText={(text: string) =>
           setForm((prev) => ({ ...prev, confirmPassword: text }))
         }
         placeholder="Enter your password"

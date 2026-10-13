@@ -1,5 +1,5 @@
 
-import {FlatList, View, Image, Text, Pressable, TouchableOpacity} from "react-native";
+import {FlatList, View, Image, Text, Pressable, TouchableOpacity, Button} from "react-native";
 import {images, offers} from "@/constants"
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Fragment} from "react"

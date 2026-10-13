@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import {View, Text, Button} from 'react-native'
 import { Link, router } from 'expo-router'
 
 import CustomInput from '@/components/CustomInput'
 import CustomButton from '@/components/CustomButton'
 import ModalForm from '@/components/ModalForm'
+import * as Sentry from "@sentry/react-native";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -44,7 +45,7 @@ const SignIn = () => {
       <CustomInput
         label="Email"
         value={form.email}
-        onChangeText={(text) =>
+        onChangeText={(text: string) =>
           setForm((prev) => ({ ...prev, email: text }))
         }
         keyboardType="email-address"
@@ -55,7 +56,7 @@ const SignIn = () => {
         label="Password"
         secureTextEntry= {true}
         value= {form.password}
-        onChangeText={(text) =>
+        onChangeText={(text: string) =>
           setForm((prev) => ({ ...prev, password: text }))
         }
         placeholder="Enter your password"
@@ -78,6 +79,10 @@ const SignIn = () => {
           </Text>
         </Link>
       </View>
+
+
+      <Button title='Try!' onPress={ () => { Sentry.captureException(new Error('First error')) }}/>
+
     </View>
   )
 }

@@ -1,52 +1,63 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, Text } from 'react-native'
 import { Link, router } from 'expo-router'
+import {deleteToken, saveToken} from "@/services/auth_storage";
+import { loginApi } from "@/services/auth_api"
 
 import CustomInput from '@/components/CustomInput'
 import CustomButton from '@/components/CustomButton'
 import ModalForm from '@/components/ModalForm'
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const SignIn = () => {
-  const [form, setForm] = useState({
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
 
-  const [invalidAuth, setInvalidAuth] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const {email, password } = formData
     try {
-      if (!form.email.trim() || !form.password) {
-        setInvalidAuth(true)
+      if (!email.trim() || !password) {
+        setErrorMessage("Please enter your email and password")
         return
       }
 
-      setInvalidAuth(false)
+      const response = await loginApi(email, password)
+      const token = response.data?.token;
 
-      router.replace('/')
+      if (!token) {
+        throw new Error("Login response contains no token");
+      }
+
+      await saveToken(token);
+      setErrorMessage("")
+
+      router.replace("/");
 
     } catch (error) {
       console.log(error)
-      throw error
+      setErrorMessage("Login failed: unauthorized")
     }
-
   }
 
   return (
+    <SafeAreaView>
     <View className="gap-16 bg-white p-5 mt-5">
-      <ModalForm
-        title = "Invalid credentials"
-        isOpen={invalidAuth}
-        message="Enter your email and password, please."
-        onClose={() => setInvalidAuth(false)}
-      />
+      { errorMessage && <ModalForm
+          title = "Invalid credentials"
+          isOpen={true}
+          message={errorMessage}
+          onClose={() => setErrorMessage("")}
+        />
+      }
 
       <CustomInput
         label="Email"
-        value={form.email}
-        onChangeText={(text: string) =>
-          setForm((prev) => ({ ...prev, email: text }))
-        }
+        value={formData.email}
+        onChangeText={(text: string) => setFormData((prev) => ({ ...prev, email: text }))}
         keyboardType="email-address"
         placeholder="Enter your email"
       />
@@ -54,10 +65,8 @@ const SignIn = () => {
       <CustomInput
         label="Password"
         secureTextEntry= {true}
-        value= {form.password}
-        onChangeText={(text: string) =>
-          setForm((prev) => ({ ...prev, password: text }))
-        }
+        value= {formData.password}
+        onChangeText={(text: string) => setFormData((prev) => ({ ...prev, password: text }))}
         placeholder="Enter your password"
       />
 
@@ -79,6 +88,7 @@ const SignIn = () => {
         </Link>
       </View>
     </View>
+    </SafeAreaView>
   )
 }
 

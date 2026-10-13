@@ -28,7 +28,9 @@ function TabIcon({ focused, icon, title }: any) {
 }
 
 export default function TabsLayout() {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user } = useAuthStore();
+
+  //console.log(JSON.stringify(user, null, 2));
 
   if(!isAuthenticated) return <Redirect href="/sign_in" />
 

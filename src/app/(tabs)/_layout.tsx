@@ -1,8 +1,9 @@
-import {router, Tabs, useRouter} from "expo-router";
+import {Redirect, router, Tabs, useRouter} from "expo-router";
 import { ImageBackground, Image, Text, View, Button } from "react-native";
 import "@/global.css";
 
 import { images } from "@/constants";
+import useAuthStore from "@/store/auth.store";
 
 function TabIcon({ focused, icon, title }: any) {
   if (focused) {
@@ -27,7 +28,11 @@ function TabIcon({ focused, icon, title }: any) {
 }
 
 export default function TabsLayout() {
-  const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
+
+  if(!isAuthenticated) return <Redirect href="/sign_in" />
+
+
   return (
     <Tabs
       screenOptions={{

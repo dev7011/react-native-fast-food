@@ -23,8 +23,6 @@ export default function TabLayout() {
 
   useEffect(() => {
     fetchAuthenticatedUser()
-      .then((data) => console.log(data))
-      .catch((error) => {console.log(error)})
   }, [])
 
   if(!fontsLoaded || isLoading) {

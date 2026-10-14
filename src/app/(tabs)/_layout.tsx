@@ -1,65 +1,66 @@
-import {Redirect, router, Tabs, useRouter} from "expo-router";
-import { ImageBackground, Image, Text, View, Button } from "react-native";
+import {Redirect, Tabs} from "expo-router";
+import {Image, Text, View } from "react-native";
 import "@/global.css";
+import cn from "clsx"
 
 import { images } from "@/constants";
 import useAuthStore from "@/store/auth.store";
+import {TabBarIconProps} from "../../../interfaces";
 
-function TabIcon({ focused, icon, title }: any) {
-  if (focused) {
-    return (
-      <ImageBackground
-        className="flex-row
-        w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden bg-gray-700"
-      >
-        <Image source={icon} tintColor="#FFFF22" className="size-5" />
-        <Text className="text-secondary text-[#FFFF22] font-semibold ml-2">
-          {title}
-        </Text>
-      </ImageBackground>
-    );
-  }
+const TabBarIcon = ({ focused, icon, title }: TabBarIconProps) => (
+  <View className="tab-icon">
+    <Image source={icon} className="size-7" resizeMode="contain" tintColor={focused ? '#FE8C00' : '#5D5F6D'} />
 
-  return (
-    <View className="size-full justify-center items-center mt-4 rounded-full">
-      <Image source={icon} tintColor="#A8B5DB" className="size-5" />
-    </View>
-  );
-}
+    <Text className={cn('text-sm font-bold', focused ? 'text-primary':'text-gray-200')}>
+      {title}
+    </Text>
+  </View>
+)
+
 
 export default function TabsLayout() {
   const { isAuthenticated, user } = useAuthStore();
 
   //console.log(JSON.stringify(user, null, 2));
-
   if(!isAuthenticated) return <Redirect href="/sign_in" />
 
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarShowLabel: false,
-        tabBarItemStyle: {
-          width: "100%",
-          height: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-        },
-        tabBarStyle: {
-          backgroundColor: "#0F0D23",
-          justifyContent: "center",
-          borderRadius: 50,
-          marginHorizontal: 20,
-          paddingHorizontal: 10,
-          marginBottom: 36,
-          height: 54,
-          position: "absolute",
-          overflow: "hidden",
-          borderWidth: 1,
-          borderColor: "#0F0D23",
-        },
-      }}
-    >
+    <Tabs screenOptions={{
+      headerShown: false,
+      tabBarShowLabel: false,
+
+      tabBarItemStyle: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 0,
+        margin: 8
+      },
+
+      tabBarIconStyle: {
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 0
+      },
+
+      tabBarStyle: {
+        borderRadius: 50,
+        marginHorizontal: 20,
+        paddingHorizontal: 15,
+        height: 80,
+        position: 'absolute',
+        bottom: 40,
+        backgroundColor: 'white',
+        shadowColor: '#1a1a1a',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 5
+      }
+    }}>
       <Tabs.Screen
         name="index"
         options={{
@@ -68,7 +69,7 @@ export default function TabsLayout() {
           headerBackButtonDisplayMode: "minimal",
 
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={images.home} title="Home" />
+            <TabBarIcon focused={focused} icon={images.home} title="Home" />
           ),
         }}
       />
@@ -78,7 +79,7 @@ export default function TabsLayout() {
           title: "Search",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={images.search} title="Search" />
+            <TabBarIcon focused={focused} icon={images.search} title="Search" />
           ),
         }}
       />
@@ -89,7 +90,7 @@ export default function TabsLayout() {
           title: "Cart",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={images.bag} title="Cart" />
+            <TabBarIcon focused={focused} icon={images.bag} title="Cart" />
           ),
         }}
       />
@@ -100,7 +101,7 @@ export default function TabsLayout() {
           title: "Profile",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={images.person} title="Profile" />
+            <TabBarIcon focused={focused} icon={images.person} title="Profile" />
           ),
         }}
       />

@@ -25,3 +25,9 @@ export interface User {
   email: string;
   avatar: string;
 }
+
+interface TabBarIconProps {
+  focused: boolean;
+  icon: ImageSourcePropType;
+  title: string;
+}

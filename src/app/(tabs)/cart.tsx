@@ -1,19 +1,31 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+import useCartStore from "@/store/cart.store";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const Cart = () => {
+  const { cartItems, getTotalPrice  } = useCartStore()
+  const totalPrice = getTotalPrice()
+  const { getItemPrice, getItemUnitPrice  }= useCartStore()
+
   return (
-    <View style={styles.container}>
-      <Text>Cart</Text>
-    </View>
+    <SafeAreaView>
+      <Text>{totalPrice}</Text>
+      <FlatList
+        data={cartItems}
+
+        renderItem={({item}) => {
+            return (
+              <Text> {item.name} {item.quantity} {getItemPrice(item)} {getItemUnitPrice(item)} </Text>
+            )
+          }}
+
+        keyExtractor = {(_, index) => index.toString()}
+        contentContainerClassName={"pb-28 px-5"}
+      />
+    </SafeAreaView>
   );
 };
 
 export default Cart;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 

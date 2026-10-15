@@ -1,9 +1,13 @@
 import {Text, TouchableOpacity, Image, Platform} from 'react-native'
 import {MenuItem} from "../../interfaces";
 import cn from "clsx"
+import useCartStore from "@/store/cart.store";
 
-const MenuCard = ({ item: { image_url, name, price }}: { item: MenuItem}) => {
-  const imageUrl = `${image_url}?project=${image_url}`;
+
+const MenuCard = ({ item }: { item: MenuItem}) => {
+  const imageUrl = `${item.image_url}?project=${item.image_url}`;
+  const { addToCart } = useCartStore()
+
 
 
   return (
@@ -11,9 +15,9 @@ const MenuCard = ({ item: { image_url, name, price }}: { item: MenuItem}) => {
       <Image source={{ uri: imageUrl }}
              className="absolute -top-10 size-32"
              resizeMode={"contain"} />
-      <Text className="text-center base-bold text-dark-100 mb-2" numberOfLines={1}>{name}</Text>
-      <Text className="body-regular text-gray-200 mb-4">From ${price}</Text>
-      <TouchableOpacity onPress={() => alert("add")}>
+      <Text className="text-center base-bold text-dark-100 mb-2" numberOfLines={1}>{item.name}</Text>
+      <Text className="body-regular text-gray-200 mb-4">From ${item.price}</Text>
+      <TouchableOpacity onPress={() => addToCart(item)}>
         <Text className="paragraph-bold text-primary">Add to Cart +</Text>
       </TouchableOpacity>
     </TouchableOpacity>

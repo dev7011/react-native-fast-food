@@ -4,16 +4,17 @@ import SearchBar from '@/components/SearchBar';
 import useFetch from "@/services/useFetch";
 import {getMenu, getCategories} from "@/services/api";
 import MenuCard from "@/components/MenuCard";
-import {Category, GetMenuParams, MenuItem} from "../../../interfaces";
+import {MenuItem} from "../../../interfaces";
 import cn from "clsx"
 import CartButton from "@/components/CartButton";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useLocalSearchParams} from "expo-router";
 import CategoryItem from "@/components/CategoryItem";
+import useCartStore from "@/store/cart.store";
 
 const Search = () => {
   const { query, category } = useLocalSearchParams<{query: string, category: string}>()
-  const { data, refetch, loading } = useFetch({ fn: getMenu, params: {category, query} })
+  const { data, refetch, } = useFetch({ fn: getMenu, params: {category, query} })
   const { data: categories } = useFetch({ fn: getCategories });
 
   useEffect(() => {

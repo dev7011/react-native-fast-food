@@ -6,6 +6,7 @@ import cn from "clsx"
 import { images } from "@/constants";
 import useAuthStore from "@/store/auth.store";
 import {TabBarIconProps} from "../../../interfaces";
+import useCartStore from "@/store/cart.store";
 
 const TabBarIcon = ({ focused, icon, title }: TabBarIconProps) => (
   <View className="tab-icon">
@@ -20,6 +21,7 @@ const TabBarIcon = ({ focused, icon, title }: TabBarIconProps) => (
 
 export default function TabsLayout() {
   const { isAuthenticated, user } = useAuthStore();
+  const { cartItems  } = useCartStore();
 
   //console.log(JSON.stringify(user, null, 2));
   if(!isAuthenticated) return <Redirect href="/sign_in" />
@@ -89,6 +91,7 @@ export default function TabsLayout() {
         options={{
           title: "Cart",
           headerShown: false,
+          tabBarBadge: cartItems.length > 0 ? cartItems.length : 0,
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} icon={images.bag} title="Cart" />
           ),

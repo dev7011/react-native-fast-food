@@ -1,4 +1,4 @@
-import {User} from "../../interfaces";
+import {GetMenuParams, User} from "../../interfaces";
 import dummyData from "../../lib/data";
 
 
@@ -16,6 +16,23 @@ export const getCurrentUser = async () => {
   }
 }
 
-export const getMenu = async () => {
-  return Promise.resolve(dummyData.menu)
+export const getMenu = async ({ category, query }: GetMenuParams) => {
+  let menu = dummyData.menu;
+
+  if (query?.trim()) {
+    menu = menu.filter((item) =>
+      item.name.toLowerCase().includes(query.trim().toLowerCase())
+    );
+  }
+
+  if (category) {
+    menu = menu.filter((item) => item.category_name === category);
+  }
+
+  return Promise.resolve(menu)
+};
+
+
+export const getCategories = async () => {
+  return Promise.resolve(dummyData.categories)
 }

@@ -1,30 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, View, Text} from 'react-native';
+import {FlatList, View, Text, TouchableOpacity} from 'react-native';
 import SearchBar from '@/components/SearchBar';
-import ThemedScrollView from "@/components/ThemedScrollView";
 import useFetch from "@/services/useFetch";
-import {getMenu} from "@/services/api";
+import {getMenu, getCategories} from "@/services/api";
 import MenuCard from "@/components/MenuCard";
-import {MenuItem} from "../../../interfaces";
+import {Category, GetMenuParams, MenuItem} from "../../../interfaces";
 import cn from "clsx"
-import {SafeAreaView} from "react-native-safe-area-context";
 import CartButton from "@/components/CartButton";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {useLocalSearchParams} from "expo-router";
+import CategoryItem from "@/components/CategoryItem";
 
 const Search = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("")
-  const { data, refetch, loading } = useFetch({fn: getMenu})
+  const { query, category } = useLocalSearchParams<{query: string, category: string}>()
+  const { data, refetch, loading } = useFetch({ fn: getMenu, params: {category, query} })
+  const { data: categories } = useFetch({ fn: getCategories });
 
   useEffect(() => {
-    const timeOut = setTimeout( async () => {
-      console.log(searchQuery)
-    }, 500)
-    return () => clearTimeout(timeOut)
-  }, [searchQuery]);
-
-  useEffect(() => {
-
-  }, []);
-
+    refetch({category, query })
+  }, [category, query ]);
 
   return (
     <SafeAreaView className="bg-white h-full">
@@ -42,7 +36,6 @@ const Search = () => {
         keyExtractor= {(_, index) => index.toString()}
         numColumns={2}
 
-
         columnWrapperClassName="gap-7"
         contentContainerClassName="gap-7 px-5 pb-32"
 
@@ -52,17 +45,18 @@ const Search = () => {
               <View className="flex-start">
                 <Text className="small-bold uppercase text-primary">Search</Text>
                 <View className="flex-start flex-row gap-x-1 mt-0.5">
-                  <Text className="paragraph-semibold text-dark-100">Find your favorite food</Text>
+                  <Text className="paragraph-semibold text-dark-100">Find your favorite food: </Text>
                 </View>
               </View>
-
               <CartButton />
             </View>
-            <SearchBar />
+            <View>
+              <SearchBar />
+              <CategoryItem categories= {categories!} />
+            </View>
           </View>
         )}
-      >
-      </FlatList>
+      />
     </SafeAreaView>
   );
 }

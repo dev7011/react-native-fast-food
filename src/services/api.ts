@@ -1,4 +1,6 @@
 import {User} from "../../interfaces";
+import dummyData from "../../lib/data";
+
 
 export const getCurrentUser = async () => {
   try {
@@ -12,4 +14,8 @@ export const getCurrentUser = async () => {
   } catch (e) {
     console.log(e);
   }
+}
+
+export const getMenu = async () => {
+  return Promise.resolve(dummyData.menu)
 }

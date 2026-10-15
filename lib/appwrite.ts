@@ -57,7 +57,7 @@ export const signIn = async ({ email, password }: SignInParams) => {
 }
 
 
-export const getMenu = async ({ category, query }: GetMenuParams) => {
+export const getMenuDB = async ({ category, query }: GetMenuParams) => {
   try {
     const queries: string[] = [];
 

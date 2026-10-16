@@ -1,5 +1,5 @@
 import {Text, TouchableOpacity, Image, Platform} from 'react-native'
-import {MenuItem} from "../../interfaces";
+import {MenuItem} from "~/interfaces";
 import cn from "clsx"
 import useCartStore from "@/store/cart.store";
 

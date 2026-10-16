@@ -5,7 +5,7 @@ import cn from "clsx"
 
 import { images } from "@/constants";
 import useAuthStore from "@/store/auth.store";
-import {TabBarIconProps} from "../../../interfaces";
+import {TabBarIconProps} from "~/interfaces";
 import useCartStore from "@/store/cart.store";
 
 const TabBarIcon = ({ focused, icon, title }: TabBarIconProps) => (

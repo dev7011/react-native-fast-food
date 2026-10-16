@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput} from 'react-native';
 import cn from "clsx"
-import {CustomInputProps} from "../../interfaces";
+import {CustomInputProps} from "~/interfaces";
 
 const CustomInput = ({
    label,

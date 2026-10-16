@@ -4,7 +4,7 @@ import SearchBar from '@/components/SearchBar';
 import useFetch from "@/services/useFetch";
 import {getMenu, getCategories} from "@/services/api";
 import MenuCard from "@/components/MenuCard";
-import {MenuItem} from "../../../interfaces";
+import {MenuItem} from "~/interfaces";
 import cn from "clsx"
 import CartButton from "@/components/CartButton";
 import {SafeAreaView} from "react-native-safe-area-context";

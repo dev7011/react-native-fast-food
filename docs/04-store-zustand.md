@@ -6,7 +6,7 @@
 
 ♦️ zum test habe ich festgestellt api.ts
 
-import {User} from "../../interfaces";
+import {User} from "~/interfaces";
 export const getCurrentUser = async () => {
   try {
     const currentUser: User = {

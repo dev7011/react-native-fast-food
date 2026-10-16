@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
-import { CustomHeaderProps } from "../../interfaces"
+import { CustomHeaderProps } from "~/interfaces"
 import {images} from "@/constants";
 
 const CustomHeader = ({ title }: CustomHeaderProps) => {

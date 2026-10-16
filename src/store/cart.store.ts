@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import {CartCustomization, CartItemType, MenuItem} from "../../interfaces"
-import dummyData from "../../lib/data";
+import {CartCustomization, CartItemType, MenuItem} from "~/interfaces"
+import dummyData from "~/lib/data";
 
 
 function areCustomizationsEqual(

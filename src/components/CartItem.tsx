@@ -1,5 +1,5 @@
 import useCartStore from "@/store/cart.store"
-import { CartItemType } from "../../interfaces"
+import { CartItemType } from "~/interfaces"
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import {images} from "@/constants";
 

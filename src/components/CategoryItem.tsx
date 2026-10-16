@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Text, TouchableOpacity, FlatList} from 'react-native';
-import {Category} from "../../interfaces";
+import {Category} from "~/interfaces";
 import cn from "clsx"
 import {router} from "expo-router"
 

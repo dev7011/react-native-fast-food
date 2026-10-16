@@ -1,5 +1,5 @@
-import {GetMenuParams, User} from "../../interfaces";
-import dummyData from "../../lib/data";
+import {GetMenuParams, User} from "~/interfaces";
+import dummyData from "~/lib/data";
 
 
 export const getCurrentUser = async () => {

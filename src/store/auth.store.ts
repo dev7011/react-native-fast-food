@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import {User} from "../../interfaces"
+import {User} from "~/interfaces"
 import {getCurrentUser} from "@/services/api"
 
 type AuthState = {

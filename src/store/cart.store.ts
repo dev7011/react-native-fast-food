@@ -2,20 +2,34 @@ import { create } from 'zustand'
 import {CartCustomization, CartItemType, MenuItem} from "../../interfaces"
 import dummyData from "../../lib/data";
 
+
+function areCustomizationsEqual(
+  a: CartCustomization[] = [],
+  b: CartCustomization[] = []
+): boolean {
+  if (a.length !== b.length) return false;
+
+  const aSorted = [...a].sort();
+  const bSorted = [...b].sort();
+
+  return aSorted.every((id, idx) => id === bSorted[idx]);
+}
+
 interface CartStore {
   cartItems: CartItemType[]
   cartCustomizationItems: CartCustomization[]
 
   addToCart: (menu: MenuItem) => void
-  removeFromCart?: (menu: MenuItem) => void
+  removeItem:  (id: string, customizations: CartCustomization[]) => void
+  increaseQty: (id: string, customizations: CartCustomization[]) => void
+  decreaseQty: (id: string, customizations: CartCustomization[]) => void
+
   clearCart?: () => void
   getTotalPrice: () => number
   getItemPrice: (cartItem: CartItemType) => number
   getItemUnitPrice: (cartItem: CartItemType)  => number
   getCustomizationPrice: (cartItem: CartItemType)  => number
-
-  increaseQty: (id: string, qty: number) => void
-  decreaseQty: (id: string, qty: number) => void
+  getTotalItems: () => number
 }
 
 const useCartStore = create<CartStore>()((set, get) => ({
@@ -43,31 +57,43 @@ const useCartStore = create<CartStore>()((set, get) => ({
       }
     }),
 
-  removeFromCart: (item) => set((state) => ({
-      cartItems: state.cartItems.filter(
-        (cartItem) => cartItem.id !== item.id
+  removeItem: (id, customizations: CartCustomization[] = []) => {
+    set({
+      cartItems: get().cartItems.filter(
+        (cartItem) =>
+          !(
+            cartItem.id === id &&
+            areCustomizationsEqual(cartItem.customizations ?? [], customizations)
+          )
       ),
-    })),
+    });
+  },
 
   clearCart: () => set({ cartItems: [] }),
 
-  increaseQty: (id: string, qty: number) =>
-    set((state: CartStore) => ({
-      cartItems: state.cartItems.map((cartItem: CartItemType) =>
-        cartItem.id === id
-          ? { ...cartItem, quantity: cartItem.quantity + qty }
+  increaseQty: (id, customizations = []) => {
+    set({
+      cartItems: get().cartItems.map((cartItem) =>
+        cartItem.id === id &&
+        areCustomizationsEqual(cartItem.customizations ?? [], customizations)
+          ? { ...cartItem, quantity: cartItem.quantity + 1 }
           : cartItem
       ),
-    })),
+    });
+  },
 
-  decreaseQty: (id: string, qty: number) =>
-    set((state: CartStore) => ({
-      cartItems: state.cartItems.map((cartItem: CartItemType) =>
-        cartItem.id === id
-          ? { ...cartItem, quantity: cartItem.quantity - qty }
-          : cartItem
-      ),
-    })),
+  decreaseQty: (id, customizations = []) => {
+    set({
+      cartItems: get()
+        .cartItems.map((cartItem) =>
+          cartItem.id === id &&
+          areCustomizationsEqual(cartItem.customizations ?? [], customizations)
+            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+            : cartItem
+        )
+        .filter((cartItem) => cartItem.quantity > 0),
+    });
+  },
 
   getTotalItems: () => get().cartItems.reduce((total, cartItem) => total + cartItem.quantity , 0),
 

@@ -29,7 +29,6 @@ export default function TabLayout() {
     return null;
   }
 
-
   return (
     <Stack>
       <Stack.Screen

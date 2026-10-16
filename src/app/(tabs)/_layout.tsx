@@ -22,6 +22,8 @@ const TabBarIcon = ({ focused, icon, title }: TabBarIconProps) => (
 export default function TabsLayout() {
   const { isAuthenticated, user } = useAuthStore();
   const { cartItems  } = useCartStore();
+  const { getTotalItems  } = useCartStore();
+  const count = getTotalItems()
 
   //console.log(JSON.stringify(user, null, 2));
   if(!isAuthenticated) return <Redirect href="/sign_in" />
@@ -91,7 +93,7 @@ export default function TabsLayout() {
         options={{
           title: "Cart",
           headerShown: false,
-          tabBarBadge: cartItems.length > 0 ? cartItems.length : 0,
+          tabBarBadge: count > 0 ? count : 0,
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} icon={images.bag} title="Cart" />
           ),

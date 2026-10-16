@@ -37,7 +37,8 @@ const useCartStore = create<CartStore>()((set, get) => ({
 
   cartCustomizationItems: dummyData.customizations,
 
-  addToCart: (item) => set((state: any) => {
+  addToCart: (item) => set(
+    (state: any) => {
       const existingItem = state.cartItems.find(
         (cartItem: CartItemType) => cartItem.id === item.id
       )
@@ -55,7 +56,8 @@ const useCartStore = create<CartStore>()((set, get) => ({
       return {
         cartItems: [...state.cartItems, { ...item, quantity: 1 }],
       }
-    }),
+    }
+  ),
 
   removeItem: (id, customizations: CartCustomization[] = []) => {
     set({
@@ -95,7 +97,12 @@ const useCartStore = create<CartStore>()((set, get) => ({
     });
   },
 
-  getTotalItems: () => get().cartItems.reduce((total, cartItem) => total + cartItem.quantity , 0),
+  getTotalItems: () => {
+    return get().cartItems.reduce(
+      (sum, item) => sum + item.quantity,
+      0
+    )
+  },
 
   getTotalPrice: () => {
     return get().cartItems.reduce((total, cartItem) => {

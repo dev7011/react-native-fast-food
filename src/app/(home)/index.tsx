@@ -68,6 +68,7 @@ const handleOpenAlert = ( message: string) => {
 const Index = () => {
   const [value, setValue] = useState<number>(0)
   return (
+    <>
     <ScrollView >
         <View style={ styles.container }>
         <Text>Home</Text>
@@ -94,33 +95,31 @@ const Index = () => {
               maximumValue={100}
               value={value}
               onValueChange={setValue}
-              minimumTrackTintColor="orange"
-              maximumTrackTintColor="#ccc"
               thumbTintColor="orange"
             />
           </View>
+      </View>
+    </ScrollView>
+      <SectionList
+        sections={DATA}
+        keyExtractor={(item, index) => item + index}
+        renderItem={({item}) => (
+          <View style={styles.item}>
+            <Text style={styles.title}>{item}</Text>
+          </View>
+        )}
+        renderSectionHeader={({section: {title}}) => (
+          <Text style={styles.header}>{title}</Text>
+        )}
 
-        <SectionList
-          sections={DATA}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({item}) => (
-            <View style={styles.item}>
-              <Text style={styles.title}>{item}</Text>
-            </View>
-          )}
-          renderSectionHeader={({section: {title}}) => (
-            <Text style={styles.header}>{title}</Text>
-          )}
-
-          ListFooterComponent = {
+        ListFooterComponent = {
           <>
             <Text className={"text-red-900"}>leer</Text>
             <Text className={"text-red-900"}>leer</Text>
           </>
-          }
-        />
-      </View>
-    </ScrollView>
+        }
+      />
+  </>
   );
 }
 
